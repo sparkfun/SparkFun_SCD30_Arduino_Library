@@ -1,0 +1,46 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SCD30	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+SCD30	KEYWORD2
+begin	KEYWORD2
+beginMeasuring	KEYWORD2
+beginMeasuring	KEYWORD2
+getCO2	KEYWORD2
+getHumidity	KEYWORD2
+getTemperature	KEYWORD2
+setMeasurementInterval	KEYWORD2
+setAmbientPressure	KEYWORD2
+setAltitudeCompensation	KEYWORD2
+setAutoSelfCalibration	KEYWORD2
+setTemperatureOffset	KEYWORD2
+dataAvailable	KEYWORD2
+readMeasurement	KEYWORD2
+sendCommand	KEYWORD2
+sendCommand	KEYWORD2
+readRegister	KEYWORD2
+computeCRC8	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+SCD30_ADDRESS	LITERAL1
+COMMAND_CONTINUOUS_MEASUREMENT	LITERAL1
+COMMAND_SET_MEASUREMENT_INTERVAL	LITERAL1
+COMMAND_GET_DATA_READY	LITERAL1
+COMMAND_READ_MEASUREMENT	LITERAL1
+COMMAND_AUTOMATIC_SELF_CALIBRATION	LITERAL1
+COMMAND_SET_FORCED_RECALIBRATION_FACTOR	LITERAL1
+COMMAND_SET_TEMPERATURE_OFFSET	LITERAL1
+COMMAND_SET_ALTITUDE_COMPENSATION	LITERAL1
