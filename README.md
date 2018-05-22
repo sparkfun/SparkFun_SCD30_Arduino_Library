@@ -1,15 +1,17 @@
-SparkFun BNO080 IMU Library
+SparkFun SCD30 CO2 Sensor Library
 ===========================================================
 
-![SparkFun Inertial Measurement Unit - BNO080](https://cdn.sparkfun.com//assets/parts/1/2/7/3/3/14586-VR_IMU__Qwiic__-_BNO080-01.jpg)
+![SparkFun SCD30 CO2 Sensor](https://cdn.sparkfun.com//assets/parts/1/2/9/8/4/14751-CO____Humidity_and_Temperature_Sensor_-_SCD30-03.jpg)
 
-[*SparkX IMU BNO080 (SPX-14586)*](https://www.sparkfun.com/products/14586)
+[*SparkX CO₂ Humidity and Temperature Sensor - SCD30 (SPX-14751)*](https://www.sparkfun.com/products/14751)
 
-The BNO080/BNO085 IMU has a combination triple axis accelerometer/gyro/magnetometer packaged with an ARM Cortex M0+ running powerful algorithms. This enables the BNO080 Inertial Measurement Unit (IMU) to produce accurate rotation vector headings with an error of 5 degrees or less. It's what we've been waiting for: all the sensor data is combined into meaningful, accurate IMU information.
+The SCD30 from Sensirion is a high quality [NDIR](https://en.wikipedia.org/wiki/Nondispersive_infrared_sensor) based CO₂ sensor capable of detecting 400 to 10000ppm with an accuracy of ±(30ppm+3%). In order to improve accuracy the SCD30 has temperature and humidity sensing built-in, as well as commands to set the current altitude.
 
-This IC was designed to be implemented in Android based cellular phones to handle all the computations necessary for virtual reality goggles using only your phone. The sensor is quite powerful but with power comes a complex interface. We've written an I<sup>2</sup>C based library that provides the rotation vector (the reading most folks want from an IMU) as well as raw acceleration, gyro, and magnetometer readings. The sensor is capable of communicating over SPI and UART as well!
+We've written an Arduino library to make reading the CO₂, humidity, and temperature very easy. It can be downloaded through the Arduino Library manager: search for 'SparkFun SCD30'. We recommend using a [Qwiic Breadboard Cable](https://www.sparkfun.com/products/14425) to connect the SCD30 to a Qwiic compatible board. The Ye*LL*ow wire goes in the SC*L* pin. The SCD30 also supports a serial interface but we haven't worked with it.
 
-In addition the BNO080 IMU provides a built-in step counter, tap detector, activity classifier (are you running, walking, or sitting still?), and a shake detector. We are duly impressed.
+The CO₂ sensor works very well and for additional accuracy the SCD30 accepts ambient pressure readings. We recommend using the SCD30 in conjunction with the [Qwiic Pressure Sensor - MS5637](https://www.sparkfun.com/products/14688) or the [Qwiic Environmental Sensor - BME680](https://www.sparkfun.com/products/14570) to obtain the current barometric pressure.
+
+Note: The SCD30 has an automatic self-calibration routine. Sensirion recommends 7 days of continuous readings with at least 1 hour a day of 'fresh air' for self-calibration to complete.
 
 Library written by Nathan Seidle ([SparkFun](http://www.sparkfun.com)).
 
@@ -25,14 +27,13 @@ Documentation
 --------------
 
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
-* **[Product Repository](https://github.com/sparkfunX/Qwiic_IMU_BNO080)** - Main repository (including hardware files)
 
 License Information
 -------------------
 
 This product is _**open source**_! 
 
-Various bits of the code have different licenses applied. Anything SparkFun wrote is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round! Anything Maxim wrote has its own license. Anything that was co-writing with Peter Jansen is BSD.
+Various bits of the code have different licenses applied. Anything SparkFun wrote is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round! 
 
 Please use, reuse, and modify these files as you see fit. Please maintain attribution to SparkFun Electronics and release anything derivative under the same license.
 
