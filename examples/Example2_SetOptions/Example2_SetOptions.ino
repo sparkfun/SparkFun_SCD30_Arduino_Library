@@ -9,7 +9,7 @@
   Feel like supporting open source hardware?
   Buy a board from SparkFun! https://www.sparkfun.com/products/14751
 
-  This example prints the current CO2 level, relative humidity, and temperature in C.
+  This example demonstrates the various settings available on the SCD30.
 
   Hardware Connections:
   Attach the Qwiic Shield to your Arduino/Photon/ESP32 or other
@@ -19,19 +19,12 @@
   Note: All settings (interval, altitude, etc) are saved to non-volatile memory and are
   loaded by the SCD30 at power on. There's no damage in sending that at each power on.
 
-  NVM:
-  continuous measurement
-  measurement interval
-  self-calibration setting
-  forced recalibration value
-  temp offset
-  altitude compensation
-
   Note: 100kHz I2C is fine, but according to the datasheet 400kHz I2C is not supported by the SCD30
 */
 
 #include <Wire.h>
 
+//Click here to get the library: http://librarymanager/All#SparkFun_SCD30
 #include "SparkFun_SCD30_Arduino_Library.h"
 
 SCD30 airSensor;
