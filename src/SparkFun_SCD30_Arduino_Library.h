@@ -1,20 +1,20 @@
 /*
-  This is a library written for the [device name]
+  This is a library written for the SCD30
   SparkFun sells these at its website: www.sparkfun.com
   Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/[device product ID]
+  https://www.sparkfun.com/products/14751
 
-  Written by Nathan Seidle @ SparkFun Electronics, December 28th, 2017
+  Written by Nathan Seidle @ SparkFun Electronics, May 22nd, 2018
 
-  The [device name] can remotely measure object temperatures within 1 degree C.
+  The SCD30 measures CO2 with accuracy of +/- 30ppm.
 
-  This library handles the initialization of the [device name] and the calculations
-  to get the temperatures.
+  This library handles the initialization of the SCD30 and outputs
+  CO2 levels, relative humidty, and temperature.
 
-  https://github.com/sparkfun/SparkFun_[device name]_Arduino_Library
+  https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library
 
   Development environment specifics:
-  Arduino IDE 1.8.3
+  Arduino IDE 1.8.5
 
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of

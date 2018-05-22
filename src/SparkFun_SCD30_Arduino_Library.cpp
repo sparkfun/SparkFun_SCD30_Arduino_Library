@@ -1,22 +1,20 @@
 /*
-  This is a library written for the BNO080
+  This is a library written for the SCD30
   SparkFun sells these at its website: www.sparkfun.com
   Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/14586
+  https://www.sparkfun.com/products/14751
 
-  Written by Nathan Seidle @ SparkFun Electronics, December 28th, 2017
+  Written by Nathan Seidle @ SparkFun Electronics, May 22nd, 2018
 
-  The BNO080 IMU is a powerful triple axis gyro/accel/magnetometer coupled with an ARM processor
-  to maintain and complete all the complex calculations for various VR, inertial, step counting,
-  and movement operations.
+  The SCD30 measures CO2 with accuracy of +/- 30ppm.
 
-  This library handles the initialization of the BNO080 and is able to query the sensor
-  for different readings.
+  This library handles the initialization of the SCD30 and outputs
+  CO2 levels, relative humidty, and temperature.
 
-  https://github.com/sparkfun/SparkFun_BNO080_Arduino_Library
+  https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library
 
   Development environment specifics:
-  Arduino IDE 1.8.3
+  Arduino IDE 1.8.5
 
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
