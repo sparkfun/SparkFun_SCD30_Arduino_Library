@@ -43,7 +43,6 @@ void loop()
 
     Serial.print(" temp(C):");
     Serial.print(airSensor.getTemperature(), 1);
-    Serial.print(airSensor.getTemperature(), 1);
 
     Serial.print(" humidity(%):");
     Serial.print(airSensor.getHumidity(), 1);
