@@ -67,6 +67,7 @@ class SCD30
 	void setAmbientPressure(uint16_t pressure_mbar);
 	void setAltitudeCompensation(uint16_t altitude);
 	void setAutoSelfCalibration(boolean enable);
+	void setForcedRecalibrationFactor(uint16_t concentration);
 	void setTemperatureOffset(float tempOffset);
 
 	boolean dataAvailable();

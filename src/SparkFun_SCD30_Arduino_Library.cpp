@@ -115,6 +115,14 @@ void SCD30::setAutoSelfCalibration(boolean enable)
     sendCommand(COMMAND_AUTOMATIC_SELF_CALIBRATION, 0); //Deactivate continuous ASC
 }
 
+//Set the forced recalibration factor. See 1.3.7.
+//The reference CO2 concentration has to be within the range 400 ppm ≤ cref(CO2) ≤ 2000 ppm.
+void SCD30::setForcedRecalibrationFactor(uint16_t concentration)
+{
+  if(concentration < 400 || concentration > 2000) return; //Error check.
+  sendCommand(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, concentration);
+}
+
 //Set the temperature offset. See 1.3.8.
 void SCD30::setTemperatureOffset(float tempOffset)
 {
