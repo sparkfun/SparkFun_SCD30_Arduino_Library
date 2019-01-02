@@ -54,7 +54,7 @@ boolean SCD30::begin(TwoWire &wirePort)
    * and now wait for clock stretch to be controlled by the client.
    */
 
-   #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)
+   #if defined(ARDUINO_ARCH_ESP8266)
    	_i2cPort->setClockStretchLimit(200000);
    #endif
 
