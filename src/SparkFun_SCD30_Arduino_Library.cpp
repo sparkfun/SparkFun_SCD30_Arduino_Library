@@ -107,41 +107,46 @@ float SCD30::getTemperature(void)
 }
 
 //Enables or disables the ASC
-void SCD30::setAutoSelfCalibration(boolean enable)
+bool SCD30::setAutoSelfCalibration(boolean enable)
 {
   if (enable)
-    sendCommand(COMMAND_AUTOMATIC_SELF_CALIBRATION, 1); //Activate continuous ASC
+    return sendCommand(COMMAND_AUTOMATIC_SELF_CALIBRATION, 1); //Activate continuous ASC
   else
-    sendCommand(COMMAND_AUTOMATIC_SELF_CALIBRATION, 0); //Deactivate continuous ASC
+    return sendCommand(COMMAND_AUTOMATIC_SELF_CALIBRATION, 0); //Deactivate continuous ASC
 }
 
 //Set the forced recalibration factor. See 1.3.7.
 //The reference CO2 concentration has to be within the range 400 ppm ≤ cref(CO2) ≤ 2000 ppm.
-void SCD30::setForcedRecalibrationFactor(uint16_t concentration)
+bool SCD30::setForcedRecalibrationFactor(uint16_t concentration)
 {
-  if(concentration < 400 || concentration > 2000) return; //Error check.
-  sendCommand(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, concentration);
+  if(concentration < 400 || concentration > 2000) {
+    return false; //Error check.
+  }
+  return sendCommand(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, concentration);
 }
 
 //Set the temperature offset. See 1.3.8.
-void SCD30::setTemperatureOffset(float tempOffset)
+bool SCD30::setTemperatureOffset(float tempOffset)
 {
   int16_t tickOffset = tempOffset * 100;
-  sendCommand(COMMAND_SET_TEMPERATURE_OFFSET, tickOffset);
+  return sendCommand(COMMAND_SET_TEMPERATURE_OFFSET, tickOffset);
 }
 
 //Set the altitude compenstation. See 1.3.9.
-void SCD30::setAltitudeCompensation(uint16_t altitude)
+bool SCD30::setAltitudeCompensation(uint16_t altitude)
 {
-  sendCommand(COMMAND_SET_ALTITUDE_COMPENSATION, altitude);
+  return sendCommand(COMMAND_SET_ALTITUDE_COMPENSATION, altitude);
 }
 
 //Set the pressure compenstation. This is passed during measurement startup.
 //mbar can be 700 to 1200
-void SCD30::setAmbientPressure(uint16_t pressure_mbar)
+bool SCD30::setAmbientPressure(uint16_t pressure_mbar)
 {
-  if(pressure_mbar < 700 || pressure_mbar > 1200) pressure_mbar = 0; //Error check
-  sendCommand(COMMAND_CONTINUOUS_MEASUREMENT, pressure_mbar);
+  if(pressure_mbar < 700 || pressure_mbar > 1200) 
+  {
+    return false;
+  }
+  return sendCommand(COMMAND_CONTINUOUS_MEASUREMENT, pressure_mbar);
 }
 
 //Begins continuous measurements
@@ -162,9 +167,9 @@ boolean SCD30::beginMeasuring(void)
 
 //Sets interval between measurements
 //2 seconds to 1800 seconds (30 minutes)
-void SCD30::setMeasurementInterval(uint16_t interval)
+bool SCD30::setMeasurementInterval(uint16_t interval)
 {
-  sendCommand(COMMAND_SET_MEASUREMENT_INTERVAL, interval);
+  return sendCommand(COMMAND_SET_MEASUREMENT_INTERVAL, interval);
 }
 
 //Returns true when data is available
@@ -195,9 +200,11 @@ boolean SCD30::readMeasurement()
   if (_i2cPort->endTransmission() != 0)
     return (0); //Sensor did not ACK
 
-  _i2cPort->requestFrom((uint8_t)SCD30_ADDRESS, (uint8_t)18);
+  const uint8_t receivedBytes = _i2cPort->requestFrom((uint8_t)SCD30_ADDRESS, (uint8_t)18);
+  bool error = false;
   if (_i2cPort->available())
   {
+    byte bytesToCrc[2];
     for (byte x = 0 ; x < 18 ; x++)
     {
       byte incoming = _i2cPort->read();
@@ -210,6 +217,7 @@ boolean SCD30::readMeasurement()
         case 4:
           tempCO2 <<= 8;
           tempCO2 |= incoming;
+          bytesToCrc[x%3] = incoming;
           break;
         case 6:
         case 7:
@@ -217,6 +225,7 @@ boolean SCD30::readMeasurement()
         case 10:
           tempTemperature <<= 8;
           tempTemperature |= incoming;
+          bytesToCrc[x%3] = incoming;
           break;
         case 12:
         case 13:
@@ -224,14 +233,27 @@ boolean SCD30::readMeasurement()
         case 16:
           tempHumidity <<= 8;
           tempHumidity |= incoming;
+          bytesToCrc[x%3] = incoming;
           break;
         default:
-          //Do nothing with the CRC bytes
+          //Validate CRC
+          const uint8_t foundCrc = computeCRC8(bytesToCrc, 2);
+          if (foundCrc != incoming) {
+            Serial.printf("Found CRC in byte %u, expected %u, got %u\n", x, incoming, foundCrc);
+            error = true;
+          }
           break;
       }
     }
+  } else {
+    Serial.printf("No SCD30 data found from I2C, i2c claims we should receive %u bytes\n", receivedBytes);
+    return false;
   }
 
+  if (error) {
+    Serial.println("Encountered error reading SCD30 data.");
+    return false;
+  }
   //Now copy the uint32s into their associated floats
   memcpy(&co2, &tempCO2, sizeof(co2));
   memcpy(&temperature, &tempTemperature, sizeof(temperature));
