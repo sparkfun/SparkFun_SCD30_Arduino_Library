@@ -62,6 +62,7 @@ class SCD30
 	uint16_t getCO2(void);
 	float getHumidity(void);
 	float getTemperature(void);
+	float getTemperatureOffset(void);
 
 	void setMeasurementInterval(uint16_t interval);
 	void setAmbientPressure(uint16_t pressure_mbar);
