@@ -7,14 +7,14 @@
   basically do whatever you want with this code.
 
   Feel like supporting open source hardware?
-  Buy a board from SparkFun! https://www.sparkfun.com/products/14751
+  Buy a board from SparkFun! https://www.sparkfun.com/products/15112
 
-  This example demonstrates the various settings available on the SCD30.
+  This example prints the current CO2 level, relative humidity, and temperature in C.
 
   Hardware Connections:
-  Attach the Qwiic Shield to your Arduino/Photon/ESP32 or other
-  Plug the sensor onto the shield
-  Serial.print it out at 9600 baud to serial monitor.
+  Attach RedBoard to computer using a USB cable.
+  Connect SCD30 to RedBoard using Qwiic cable.
+  Open Serial Monitor at 115200 baud.
 
   Note: All settings (interval, altitude, etc) are saved to non-volatile memory and are
   loaded by the SCD30 at power on. There's no damage in sending that at each power on.
@@ -24,19 +24,21 @@
 
 #include <Wire.h>
 
-//Click here to get the library: http://librarymanager/All#SparkFun_SCD30
-#include "SparkFun_SCD30_Arduino_Library.h"
-
+#include "SparkFun_SCD30_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_SCD30
 SCD30 airSensor;
 
 void setup()
 {
+  Serial.begin(115200);
+  Serial.println("SCD30 Example");
   Wire.begin();
 
-  Serial.begin(9600);
-  Serial.println("SCD30 Example");
-
-  airSensor.begin(); //This will cause readings to occur every two seconds
+  if (airSensor.begin() == false)
+  {
+    Serial.println("Air sensor not detected. Please check wiring. Freezing...");
+    while (1)
+      ;
+  }
 
   airSensor.setMeasurementInterval(4); //Change number of seconds between measurements: 2 to 1800 (30 minutes)
 
@@ -46,9 +48,12 @@ void setup()
   //Pressure in Boulder, CO is 24.65inHg or 834.74mBar
   airSensor.setAmbientPressure(835); //Current ambient pressure in mBar: 700 to 1200
 
-  float offset = airSensor.getTemperatureOffset(); //Get current temperature offset and save it in the variable "offset"
-  
-  airSensor.setTemperatureOffset(5); //Set temperature offset to 5°C
+  float offset = airSensor.getTemperatureOffset();
+  Serial.print("Current temp offset: ");
+  Serial.print(offset, 2);
+  Serial.println("C");
+
+  //airSensor.setTemperatureOffset(5); //Optionally we can set temperature offset to 5°C
 }
 
 void loop()

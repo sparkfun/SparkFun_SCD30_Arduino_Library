@@ -7,33 +7,35 @@
   basically do whatever you want with this code.
 
   Feel like supporting open source hardware?
-  Buy a board from SparkFun! https://www.sparkfun.com/products/14751
+  Buy a board from SparkFun! https://www.sparkfun.com/products/15112
 
-  This example demonstrates how to start the library using other Wire ports.
+  This example prints the current CO2 level, relative humidity, and temperature in C.
 
   Hardware Connections:
-  Attach the Qwiic Shield to your Arduino/Photon/ESP32 or other
-  Plug the sensor onto the shield
-  Serial.print it out at 9600 baud to serial monitor.
+  This example requires a platform that has multiple I2C ports.
+  It will not compile on an Uno. Try an Artemis RedBoard or ATP.
 
   Note: 100kHz I2C is fine, but according to the datasheet 400kHz I2C is not supported by the SCD30
 */
 
 #include <Wire.h>
 
-//Click here to get the library: http://librarymanager/All#SparkFun_SCD30
-#include "SparkFun_SCD30_Arduino_Library.h"
-
+#include "SparkFun_SCD30_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_SCD30
 SCD30 airSensor;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("SCD30 Example");
 
   Wire1.begin(); //Start the wire hardware that may be supported by your platform
 
-  airSensor.begin(Wire1); //Pass the Wire port to the .begin() function
+  if (airSensor.begin(Wire1) == false) //Pass the Wire port to the .begin() function
+  {
+    Serial.println("Air sensor not detected. Please check wiring. Freezing...");
+    while (1)
+      ;
+  }
 
   //The library will now use Wire1 for all communication
 }
@@ -58,4 +60,3 @@ void loop()
 
   delay(1000);
 }
-
