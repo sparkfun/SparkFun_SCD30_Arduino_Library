@@ -45,6 +45,10 @@ void setup()
 
   //Pressure in Boulder, CO is 24.65inHg or 834.74mBar
   airSensor.setAmbientPressure(835); //Current ambient pressure in mBar: 700 to 1200
+
+  float offset = airSensor.getTemperatureOffset(); //Get current temperature offset and save it in the variable "offset"
+  
+  airSensor.setTemperatureOffset(5); //Set temperature offset to 5°C
 }
 
 void loop()
@@ -67,4 +71,3 @@ void loop()
 
   delay(1000);
 }
-

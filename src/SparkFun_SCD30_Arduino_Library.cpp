@@ -123,6 +123,13 @@ void SCD30::setForcedRecalibrationFactor(uint16_t concentration)
   sendCommand(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, concentration);
 }
 
+//Get the temperature offset. See 1.3.8.
+float SCD30::getTemperatureOffset()
+{
+  uint16_t response = readRegister(COMMAND_SET_TEMPERATURE_OFFSET);
+  return (float) response / 100;
+}
+
 //Set the temperature offset. See 1.3.8.
 void SCD30::setTemperatureOffset(float tempOffset)
 {

@@ -19,6 +19,7 @@ beginMeasuring	KEYWORD2
 getCO2	KEYWORD2
 getHumidity	KEYWORD2
 getTemperature	KEYWORD2
+getTemperatureOffset	KEYWORD2
 setMeasurementInterval	KEYWORD2
 setAmbientPressure	KEYWORD2
 setAltitudeCompensation	KEYWORD2
