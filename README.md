@@ -15,6 +15,10 @@ Note: The SCD30 has an automatic self-calibration routine. Sensirion recommends 
 
 Library written by Nathan Seidle ([SparkFun](http://www.sparkfun.com)).
 
+Thanks to!
+
+* [jobr97](https://github.com/jobr97) for adding the getTemperatureOffset() method
+
 Repository Contents
 -------------------
 
