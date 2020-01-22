@@ -27,11 +27,7 @@
 
 #pragma once
 
-#if (ARDUINO >= 100)
 #include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
 
 #include <Wire.h>
 
@@ -64,12 +60,12 @@ class SCD30
 	float getTemperature(void);
 	float getTemperatureOffset(void);
 
-	void setMeasurementInterval(uint16_t interval);
-	void setAmbientPressure(uint16_t pressure_mbar);
-	void setAltitudeCompensation(uint16_t altitude);
-	void setAutoSelfCalibration(boolean enable);
-	void setForcedRecalibrationFactor(uint16_t concentration);
-	void setTemperatureOffset(float tempOffset);
+	bool setMeasurementInterval(uint16_t interval);
+	bool setAmbientPressure(uint16_t pressure_mbar);
+	bool setAltitudeCompensation(uint16_t altitude);
+	bool setAutoSelfCalibration(boolean enable);
+	bool setForcedRecalibrationFactor(uint16_t concentration);
+	bool setTemperatureOffset(float tempOffset);
 
 	boolean dataAvailable();
 	boolean readMeasurement();
