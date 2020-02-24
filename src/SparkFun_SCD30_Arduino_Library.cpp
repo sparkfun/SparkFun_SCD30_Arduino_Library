@@ -245,7 +245,7 @@ bool SCD30::readMeasurement()
         const uint8_t foundCrc = computeCRC8(bytesToCrc, 2);
         if (foundCrc != incoming)
         {
-          Serial.printf("Found CRC in byte %u, expected %u, got %u\n", x, incoming, foundCrc);
+          //Serial.printf("Found CRC in byte %u, expected %u, got %u\n", x, incoming, foundCrc);
           error = true;
         }
         break;
@@ -254,13 +254,13 @@ bool SCD30::readMeasurement()
   }
   else
   {
-    Serial.printf("No SCD30 data found from I2C, i2c claims we should receive %u bytes\n", receivedBytes);
+    //Serial.printf("No SCD30 data found from I2C, i2c claims we should receive %u bytes\n", receivedBytes);
     return false;
   }
 
   if (error)
   {
-    Serial.println("Encountered error reading SCD30 data.");
+    //Serial.println("Encountered error reading SCD30 data.");
     return false;
   }
   //Now copy the uint32s into their associated floats
