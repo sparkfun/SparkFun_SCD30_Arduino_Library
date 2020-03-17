@@ -25,6 +25,7 @@ setAmbientPressure	KEYWORD2
 setAltitudeCompensation	KEYWORD2
 setAutoSelfCalibration	KEYWORD2
 setTemperatureOffset	KEYWORD2
+setForcedRecalibrationFactor KEYWORD2
 dataAvailable	KEYWORD2
 readMeasurement	KEYWORD2
 sendCommand	KEYWORD2
