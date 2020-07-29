@@ -49,8 +49,9 @@ class SCD30
 {
 public:
 	SCD30(void);
-
-	bool begin(TwoWire &wirePort = Wire); //By default use Wire port
+  
+	bool begin(bool autoCalibrate) { return begin(Wire, autoCalibrate); }
+	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate=true); //By default use Wire port
 
 	bool beginMeasuring(uint16_t pressureOffset);
 	bool beginMeasuring(void);
