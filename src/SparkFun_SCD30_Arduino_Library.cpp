@@ -33,7 +33,7 @@ SCD30::SCD30(void)
 }
 
 //Initialize the Serial port
-bool SCD30::begin(TwoWire &wirePort)
+bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate)
 {
   _i2cPort = &wirePort; //Grab which port the user wants us to use
 
@@ -58,7 +58,7 @@ bool SCD30::begin(TwoWire &wirePort)
   if (beginMeasuring() == true) //Start continuous measurements
   {
     setMeasurementInterval(2);    //2 seconds between measurements
-    setAutoSelfCalibration(true); //Enable auto-self-calibration
+    setAutoSelfCalibration(autoCalibrate); //Enable auto-self-calibration
 
     return (true);
   }
