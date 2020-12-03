@@ -44,6 +44,7 @@
 #define COMMAND_SET_FORCED_RECALIBRATION_FACTOR 0x5204
 #define COMMAND_SET_TEMPERATURE_OFFSET 0x5403
 #define COMMAND_SET_ALTITUDE_COMPENSATION 0x5102
+#define COMMAND_RESET 0xD304
 
 class SCD30
 {
@@ -67,9 +68,12 @@ public:
 	bool setAutoSelfCalibration(bool enable);
 	bool setForcedRecalibrationFactor(uint16_t concentration);
 	bool setTemperatureOffset(float tempOffset);
+	bool getAutoSelfCalibration(void);
 
 	bool dataAvailable();
 	bool readMeasurement();
+	
+	void reset();
 
 	bool sendCommand(uint16_t command, uint16_t arguments);
 	bool sendCommand(uint16_t command);
