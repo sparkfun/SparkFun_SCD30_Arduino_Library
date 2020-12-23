@@ -123,7 +123,7 @@ bool SCD30::setForcedRecalibrationFactor(uint16_t concentration)
 }
 
 //Get the temperature offset. See 1.3.8.
-float SCD30::getTemperatureOffset()
+float SCD30::getTemperatureOffset(void)
 {
   uint16_t response = readRegister(COMMAND_SET_TEMPERATURE_OFFSET);
   return (float)response / 100;
@@ -134,6 +134,12 @@ bool SCD30::setTemperatureOffset(float tempOffset)
 {
   int16_t tickOffset = tempOffset * 100;
   return sendCommand(COMMAND_SET_TEMPERATURE_OFFSET, tickOffset);
+}
+
+//Get the altitude compenstation. See 1.3.9.
+uint16_t SCD30::getAltitudeCompensation(void)
+{
+  return readRegister(COMMAND_SET_ALTITUDE_COMPENSATION);
 }
 
 //Set the altitude compenstation. See 1.3.9.
