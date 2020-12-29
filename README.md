@@ -1,7 +1,7 @@
-SparkFun SCD30 CO2 Sensor Library
+SparkFun SCD30 CO₂ Sensor Library
 ===========================================================
 
-![SparkFun SCD30 CO2 Sensor](https://cdn.sparkfun.com//assets/parts/1/2/9/8/4/SparkFun_Sensirion_SCD30.jpg)
+![SparkFun SCD30 CO₂ Sensor](https://cdn.sparkfun.com//assets/parts/1/2/9/8/4/SparkFun_Sensirion_SCD30.jpg)
 
 [*SparkX CO₂ Humidity and Temperature Sensor - SCD30 (SPX-14751)*](https://www.sparkfun.com/products/14751)
 
