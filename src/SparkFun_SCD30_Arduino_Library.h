@@ -60,7 +60,7 @@ public:
 	float getHumidity(void);
 	float getTemperature(void);
 	float getTemperatureOffset(void);
-  uint16_t getAltitudeCompensation(void);
+	uint16_t getAltitudeCompensation(void);
 
 	bool setMeasurementInterval(uint16_t interval);
 	bool setAmbientPressure(uint16_t pressure_mbar);
