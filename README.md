@@ -20,6 +20,7 @@ Thanks to!
 * [jobr97](https://github.com/jobr97) for adding the getTemperatureOffset() method
 * [bobobo1618](https://github.com/bobobo1618) for writing a CRC check and improving the return values of the library
 * [labeneator](https://github.com/labeneator) for adding method to disable calibrate at begin
+* [AndreasExner](https://github.com/AndreasExner) for adding [reset and getAutoSelfCalibration methods](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/17)
 
 Repository Contents
 -------------------
