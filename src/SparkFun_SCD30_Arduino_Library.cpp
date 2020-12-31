@@ -153,6 +153,25 @@ bool SCD30::setAmbientPressure(uint16_t pressure_mbar)
   return sendCommand(COMMAND_CONTINUOUS_MEASUREMENT, pressure_mbar);
 }
 
+// SCD30 soft reset
+void SCD30::reset()
+{
+	sendCommand(COMMAND_RESET);
+	
+}
+
+// Get the current ASC setting
+bool SCD30::getAutoSelfCalibration()
+{
+  uint16_t response = readRegister(COMMAND_AUTOMATIC_SELF_CALIBRATION);
+  if (response == 1) {
+    return true;
+  }
+  else {
+	return false;
+  }	
+}
+
 //Begins continuous measurements
 //Continuous measurement status is saved in non-volatile memory. When the sensor
 //is powered down while continuous measurement mode is active SCD30 will measure
