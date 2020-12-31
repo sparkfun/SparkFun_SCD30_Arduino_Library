@@ -36,6 +36,12 @@ void setup()
             ;
     }
 
+    Serial.print("Auto calibration set to ");
+    if (airSensor.getAutoSelfCalibration() == true)
+        Serial.println("true");
+    else
+        Serial.println("false");
+
     //The SCD30 has data ready every two seconds
 }
 
