@@ -33,7 +33,11 @@ SCD30::SCD30(void)
 }
 
 //Initialize the Serial port
+#ifdef USE_TEENSY3_I2C_LIB
+bool SCD30::begin(i2c_t3 &wirePort, bool autoCalibrate)
+#else
 bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate)
+#endif
 {
   _i2cPort = &wirePort; //Grab which port the user wants us to use
 
