@@ -28,7 +28,10 @@
 #ifndef __SparkFun_SCD30_ARDUINO_LIBARARY_H__
 #define __SparkFun_SCD30_ARDUINO_LIBARARY_H__
 
-#define USE_TEENSY3_I2C_LIB
+// Uncomment the next #define if using an Teensy >= 3 or Teensy LC and want to use the dedicated I2C-Library for it
+// Then you also have to include <i2c_t3.h> on your application instead of <Wire.h>
+
+// #define USE_TEENSY3_I2C_LIB
 
 #include "Arduino.h"
 #ifdef USE_TEENSY3_I2C_LIB
