@@ -22,6 +22,7 @@ Thanks to!
 * [labeneator](https://github.com/labeneator) for adding method to disable calibrate at begin
 * [AndreasExner](https://github.com/AndreasExner) for adding [reset and getAutoSelfCalibration methods](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/17)
 * [awatterott](https://github.com/awatterott) for adding [getAltitudeCompensation()](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/18)
+* [jogi-k](https://github.com/jogi-k) for adding [teensy i2clib](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/19) support
 
 Repository Contents
 -------------------
