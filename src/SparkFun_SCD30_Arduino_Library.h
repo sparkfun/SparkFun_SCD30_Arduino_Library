@@ -28,8 +28,17 @@
 #ifndef __SparkFun_SCD30_ARDUINO_LIBARARY_H__
 #define __SparkFun_SCD30_ARDUINO_LIBARARY_H__
 
+// Uncomment the next #define if using an Teensy >= 3 or Teensy LC and want to use the dedicated I2C-Library for it
+// Then you also have to include <i2c_t3.h> on your application instead of <Wire.h>
+
+// #define USE_TEENSY3_I2C_LIB
+
 #include "Arduino.h"
+#ifdef USE_TEENSY3_I2C_LIB
+#include <i2c_t3.h>
+#else
 #include <Wire.h>
+#endif
 
 //The default I2C address for the SCD30 is 0x61.
 #define SCD30_ADDRESS 0x61
@@ -52,8 +61,11 @@ public:
 	SCD30(void);
   
 	bool begin(bool autoCalibrate) { return begin(Wire, autoCalibrate); }
+#ifdef USE_TEENSY3_I2C_LIB
+	bool begin(i2c_t3 &wirePort = Wire, bool autoCalibrate=true); //By default use Wire port
+#else
 	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate=true); //By default use Wire port
-
+#endif
 	bool beginMeasuring(uint16_t pressureOffset);
 	bool beginMeasuring(void);
 
@@ -85,8 +97,11 @@ public:
 
 private:
 	//Variables
+#ifdef USE_TEENSY3_I2C_LIB
+	i2c_t3 *_i2cPort; //The generic connection to user's chosen I2C hardware
+#else
 	TwoWire *_i2cPort; //The generic connection to user's chosen I2C hardware
-
+#endif
 	//Global main datums
 	float co2 = 0;
 	float temperature = 0;
