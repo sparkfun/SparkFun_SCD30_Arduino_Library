@@ -6,6 +6,11 @@
 
   Written by Nathan Seidle @ SparkFun Electronics, May 22nd, 2018
 
+	Updated February 1st 2021 to include some of the features of paulvha's version of the library
+	(while maintaining backward-compatibility):
+	https://github.com/paulvha/scd30
+	Thank you Paul!
+
   The SCD30 measures CO2 with accuracy of +/- 30ppm.
 
   This library handles the initialization of the SCD30 and outputs
@@ -14,15 +19,10 @@
   https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library
 
   Development environment specifics:
-  Arduino IDE 1.8.5
+  Arduino IDE 1.8.13
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	SparkFun code, firmware, and software is released under the MIT License.
+  Please see LICENSE.md for more details.
 */
 
 #ifndef __SparkFun_SCD30_ARDUINO_LIBARARY_H__
@@ -53,21 +53,40 @@
 #define COMMAND_SET_FORCED_RECALIBRATION_FACTOR 0x5204
 #define COMMAND_SET_TEMPERATURE_OFFSET 0x5403
 #define COMMAND_SET_ALTITUDE_COMPENSATION 0x5102
-#define COMMAND_RESET 0xD304
+#define COMMAND_RESET 0xD304 // Soft reset
+#define COMMAND_STOP_MEAS 0x0104
+#define COMMAND_READ_FW_VER 0xD100
+
+typedef union {
+    byte array[4];
+    float value;
+} ByteToFl; // paulvha
 
 class SCD30
 {
 public:
 	SCD30(void);
-  
+
 	bool begin(bool autoCalibrate) { return begin(Wire, autoCalibrate); }
 #ifdef USE_TEENSY3_I2C_LIB
-	bool begin(i2c_t3 &wirePort = Wire, bool autoCalibrate=true); //By default use Wire port
+	bool begin(i2c_t3 &wirePort = Wire, bool autoCalibrate=true, bool measBegin=true); //By default use Wire port
 #else
-	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate=true); //By default use Wire port
+	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate=true, bool measBegin=true); //By default use Wire port
 #endif
+
+	void enableDebugging(Stream &debugPort = Serial); //Turn on debug printing. If user doesn't specify then Serial will be used.
+
 	bool beginMeasuring(uint16_t pressureOffset);
 	bool beginMeasuring(void);
+	bool StopMeasurement(void); // paulvha
+
+	// based on paulvha
+	bool getSettingValue(uint16_t registerAddress, uint16_t *val);
+	bool getForcedRecalibration(uint16_t *val) {return(getSettingValue(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, val));}
+	bool getMeasurementInterval(uint16_t *val) {return(getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, val));}
+	bool getTemperatureOffset(uint16_t *val) {return(getSettingValue(COMMAND_SET_TEMPERATURE_OFFSET, val));}
+	bool getAltitudeCompensation(uint16_t *val) {return(getSettingValue(COMMAND_SET_ALTITUDE_COMPENSATION, val));}
+	bool getFirmwareVersion(uint16_t *val) {return(getSettingValue(COMMAND_READ_FW_VER, val));}
 
 	uint16_t getCO2(void);
 	float getHumidity(void);
@@ -85,7 +104,7 @@ public:
 
 	bool dataAvailable();
 	bool readMeasurement();
-	
+
 	void reset();
 
 	bool sendCommand(uint16_t command, uint16_t arguments);
@@ -96,6 +115,7 @@ public:
 	uint8_t computeCRC8(uint8_t data[], uint8_t len);
 
 private:
+
 	//Variables
 #ifdef USE_TEENSY3_I2C_LIB
 	i2c_t3 *_i2cPort; //The generic connection to user's chosen I2C hardware
@@ -112,5 +132,10 @@ private:
 	bool co2HasBeenReported = true;
 	bool humidityHasBeenReported = true;
 	bool temperatureHasBeenReported = true;
+
+	//Debug
+	Stream *_debugPort;			 //The stream to send debug messages to if enabled. Usually Serial.
+	boolean _printDebug = false; //Flag to print debugging variables
+
 };
 #endif

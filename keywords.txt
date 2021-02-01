@@ -14,26 +14,31 @@ SCD30	KEYWORD1
 
 SCD30	KEYWORD2
 begin	KEYWORD2
+enableDebugging	KEYWORD2
 beginMeasuring	KEYWORD2
+StopMeasurement	KEYWORD2
+getSettingValue	KEYWORD2
+getForcedRecalibration	KEYWORD2
+getMeasurementInterval	KEYWORD2
+getTemperatureOffset	KEYWORD2
+getAltitudeCompensation	KEYWORD2
+getFirmwareVersion	KEYWORD2
 getCO2	KEYWORD2
 getHumidity	KEYWORD2
 getTemperature	KEYWORD2
-getTemperatureOffset	KEYWORD2
 setMeasurementInterval	KEYWORD2
 setAmbientPressure	KEYWORD2
 setAltitudeCompensation	KEYWORD2
-getAltitudeCompensation	KEYWORD2
 setAutoSelfCalibration	KEYWORD2
-setTemperatureOffset	KEYWORD2
 setForcedRecalibrationFactor	KEYWORD2
+setTemperatureOffset	KEYWORD2
+getAutoSelfCalibration	KEYWORD2
 dataAvailable	KEYWORD2
 readMeasurement	KEYWORD2
-sendCommand	KEYWORD2
+reset	KEYWORD2
 sendCommand	KEYWORD2
 readRegister	KEYWORD2
 computeCRC8	KEYWORD2
-getAutoSelfCalibration	KEYWORD2
-reset	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
@@ -48,3 +53,6 @@ COMMAND_AUTOMATIC_SELF_CALIBRATION	LITERAL1
 COMMAND_SET_FORCED_RECALIBRATION_FACTOR	LITERAL1
 COMMAND_SET_TEMPERATURE_OFFSET	LITERAL1
 COMMAND_SET_ALTITUDE_COMPENSATION	LITERAL1
+COMMAND_RESET	LITERAL1
+COMMAND_STOP_MEAS	LITERAL1
+COMMAND_READ_FW_VER	LITERAL1
