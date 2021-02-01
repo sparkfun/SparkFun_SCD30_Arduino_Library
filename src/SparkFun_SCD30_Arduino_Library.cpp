@@ -64,7 +64,7 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
 
   if (_printDebug == true)
   {
-    _debugPort->print("SCD30 begin: got firmware version 0x");
+    _debugPort->print(F("SCD30 begin: got firmware version 0x"));
     _debugPort->println(fwVer, HEX);
   }
 
@@ -332,7 +332,7 @@ bool SCD30::readMeasurement()
   if (error)
   {
     if (_printDebug == true)
-      _debugPort->println("readMeasurement: encountered error reading SCD30 data.");
+      _debugPort->println(F("readMeasurement: encountered error reading SCD30 data."));
     return false;
   }
   //Now copy the uint32s into their associated floats
