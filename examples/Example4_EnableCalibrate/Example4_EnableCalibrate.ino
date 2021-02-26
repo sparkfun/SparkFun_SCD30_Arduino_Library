@@ -9,7 +9,15 @@
   Feel like supporting open source hardware?
   Buy a board from SparkFun! https://www.sparkfun.com/products/15112
 
-  This example turns off the auto-calibrate function during .begin()
+  This example turns on the auto-calibrate function during .begin()
+  Please see section 1.3.6 of the SCD30 datasheet:
+
+  "When activated for the first time a
+    period of minimum 7 days is needed so that the algorithm can find its initial parameter set for ASC. The sensor has to be exposed
+    to fresh air for at least 1 hour every day. Also during that period, the sensor may not be disconnected from the power supply,
+    otherwise the procedure to find calibration parameters is aborted and has to be restarted from the beginning. The successfully
+    calculated parameters are stored in non-volatile memory of the SCD30 having the effect that after a restart the previously found
+    parameters for ASC are still present. "
 
   Hardware Connections:
   Attach RedBoard to computer using a USB cable.
@@ -29,7 +37,7 @@ void setup()
     Wire.begin();
 
     //Start sensor using the Wire port, but disable the auto-calibration
-    if (airSensor.begin(Wire, false) == false)
+    if (airSensor.begin(Wire, true) == false)
     {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1)

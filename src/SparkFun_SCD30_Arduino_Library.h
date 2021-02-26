@@ -57,9 +57,10 @@
 #define COMMAND_STOP_MEAS 0x0104
 #define COMMAND_READ_FW_VER 0xD100
 
-typedef union {
-    byte array[4];
-    float value;
+typedef union
+{
+	byte array[4];
+	float value;
 } ByteToFl; // paulvha
 
 class SCD30
@@ -69,9 +70,9 @@ public:
 
 	bool begin(bool autoCalibrate) { return begin(Wire, autoCalibrate); }
 #ifdef USE_TEENSY3_I2C_LIB
-	bool begin(i2c_t3 &wirePort = Wire, bool autoCalibrate=true, bool measBegin=true); //By default use Wire port
+	bool begin(i2c_t3 &wirePort = Wire, bool autoCalibrate = false, bool measBegin = true); //By default use Wire port
 #else
-	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate=true, bool measBegin=true); //By default use Wire port
+	bool begin(TwoWire &wirePort = Wire, bool autoCalibrate = false, bool measBegin = true); //By default use Wire port
 #endif
 
 	void enableDebugging(Stream &debugPort = Serial); //Turn on debug printing. If user doesn't specify then Serial will be used.
@@ -82,11 +83,11 @@ public:
 
 	// based on paulvha
 	bool getSettingValue(uint16_t registerAddress, uint16_t *val);
-	bool getForcedRecalibration(uint16_t *val) {return(getSettingValue(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, val));}
-	bool getMeasurementInterval(uint16_t *val) {return(getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, val));}
-	bool getTemperatureOffset(uint16_t *val) {return(getSettingValue(COMMAND_SET_TEMPERATURE_OFFSET, val));}
-	bool getAltitudeCompensation(uint16_t *val) {return(getSettingValue(COMMAND_SET_ALTITUDE_COMPENSATION, val));}
-	bool getFirmwareVersion(uint16_t *val) {return(getSettingValue(COMMAND_READ_FW_VER, val));}
+	bool getForcedRecalibration(uint16_t *val) { return (getSettingValue(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, val)); }
+	bool getMeasurementInterval(uint16_t *val) { return (getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, val)); }
+	bool getTemperatureOffset(uint16_t *val) { return (getSettingValue(COMMAND_SET_TEMPERATURE_OFFSET, val)); }
+	bool getAltitudeCompensation(uint16_t *val) { return (getSettingValue(COMMAND_SET_ALTITUDE_COMPENSATION, val)); }
+	bool getFirmwareVersion(uint16_t *val) { return (getSettingValue(COMMAND_READ_FW_VER, val)); }
 
 	uint16_t getCO2(void);
 	float getHumidity(void);
@@ -115,12 +116,11 @@ public:
 	uint8_t computeCRC8(uint8_t data[], uint8_t len);
 
 private:
-
 	//Variables
 #ifdef USE_TEENSY3_I2C_LIB
 	i2c_t3 *_i2cPort; //The generic connection to user's chosen I2C hardware
 #else
-	TwoWire *_i2cPort; //The generic connection to user's chosen I2C hardware
+	TwoWire *_i2cPort;																		 //The generic connection to user's chosen I2C hardware
 #endif
 	//Global main datums
 	float co2 = 0;
@@ -136,6 +136,5 @@ private:
 	//Debug
 	Stream *_debugPort;			 //The stream to send debug messages to if enabled. Usually Serial.
 	boolean _printDebug = false; //Flag to print debugging variables
-
 };
 #endif
