@@ -36,7 +36,7 @@ void setup()
     Serial.println("SCD30 Example");
     Wire.begin();
 
-    //Start sensor using the Wire port, but disable the auto-calibration
+    //Start sensor using the Wire port and enable the auto-calibration (ASC)
     if (airSensor.begin(Wire, true) == false)
     {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
