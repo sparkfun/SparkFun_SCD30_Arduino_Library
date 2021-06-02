@@ -24,6 +24,7 @@ Thanks to!
 * [awatterott](https://github.com/awatterott) for adding [getAltitudeCompensation()](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/18)
 * [jogi-k](https://github.com/jogi-k) for adding [teensy i2clib](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/19) support
 * [paulvha](https://github.com/paulvha) for the suggestions and corrections in [his version of the library](https://github.com/paulvha/scd30)
+* [yamamaya](https://github.com/yamamaya) for the [3ms delay](https://github.com/sparkfun/SparkFun_SCD30_Arduino_Library/pull/24)
 
 Repository Contents
 -------------------
