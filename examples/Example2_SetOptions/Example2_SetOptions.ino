@@ -40,7 +40,17 @@ void setup()
       ;
   }
 
-  airSensor.setMeasurementInterval(4); //Change number of seconds between measurements: 2 to 1800 (30 minutes)
+  airSensor.setMeasurementInterval(16); //Change number of seconds between measurements: 2 to 1800 (30 minutes), stored in non-volatile memory of SCD30
+
+  //While the setting is recorded, it is not immediately available to be read.
+  delay(200);
+
+  int interval = airSensor.getMeasurementInterval();
+  Serial.print("Measurement Interval: ");
+  Serial.println(interval);
+
+  //My desk is ~1600m above sealevel
+  airSensor.setAltitudeCompensation(1600); //Set altitude of the sensor in m, stored in non-volatile memory of SCD30
 
   //Read altitude compensation value
   unsigned int altitude = airSensor.getAltitudeCompensation();
@@ -48,19 +58,16 @@ void setup()
   Serial.print(altitude);
   Serial.println("m");
 
-  //My desk is ~1600m above sealevel
-  airSensor.setAltitudeCompensation(1600); //Set altitude of the sensor in m, stored in non-volatile memory of SCD30
-
   //Pressure in Boulder, CO is 24.65inHg or 834.74mBar
   airSensor.setAmbientPressure(835); //Current ambient pressure in mBar: 700 to 1200, will overwrite altitude compensation
+
+  airSensor.setTemperatureOffset(5); //Optionally we can set temperature offset to 5°C, stored in non-volatile memory of SCD30
 
   //Read temperature offset
   float offset = airSensor.getTemperatureOffset();
   Serial.print("Current temp offset: ");
   Serial.print(offset, 2);
   Serial.println("C");
-
-  //airSensor.setTemperatureOffset(5); //Optionally we can set temperature offset to 5°C, stored in non-volatile memory of SCD30
 }
 
 void loop()

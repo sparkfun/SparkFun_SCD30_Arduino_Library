@@ -17,22 +17,30 @@ begin	KEYWORD2
 enableDebugging	KEYWORD2
 beginMeasuring	KEYWORD2
 StopMeasurement	KEYWORD2
+
+setAmbientPressure	KEYWORD2
+
 getSettingValue	KEYWORD2
-getForcedRecalibration	KEYWORD2
-getMeasurementInterval	KEYWORD2
-getTemperatureOffset	KEYWORD2
-getAltitudeCompensation	KEYWORD2
 getFirmwareVersion	KEYWORD2
 getCO2	KEYWORD2
 getHumidity	KEYWORD2
 getTemperature	KEYWORD2
+
+getMeasurementInterval	KEYWORD2
 setMeasurementInterval	KEYWORD2
-setAmbientPressure	KEYWORD2
+
+getAltitudeCompensation	KEYWORD2
 setAltitudeCompensation	KEYWORD2
-setAutoSelfCalibration	KEYWORD2
-setForcedRecalibrationFactor	KEYWORD2
-setTemperatureOffset	KEYWORD2
+
 getAutoSelfCalibration	KEYWORD2
+setAutoSelfCalibration	KEYWORD2
+
+getForcedRecalibration	KEYWORD2
+setForcedRecalibrationFactor	KEYWORD2
+
+getTemperatureOffset	KEYWORD2
+setTemperatureOffset	KEYWORD2
+
 dataAvailable	KEYWORD2
 readMeasurement	KEYWORD2
 reset	KEYWORD2

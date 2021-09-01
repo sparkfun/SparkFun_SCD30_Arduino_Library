@@ -74,7 +74,7 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
   //Check for device to respond correctly
   if (beginMeasuring() == true) //Start continuous measurements
   {
-    setMeasurementInterval(2);    //2 seconds between measurements
+    setMeasurementInterval(2);             //2 seconds between measurements
     setAutoSelfCalibration(autoCalibrate); //Enable auto-self-calibration
 
     return (true);
@@ -87,8 +87,8 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
 //You can also call it with other streams like Serial1, SerialUSB, etc.
 void SCD30::enableDebugging(Stream &debugPort)
 {
-	_debugPort = &debugPort;
-	_printDebug = true;
+  _debugPort = &debugPort;
+  _printDebug = true;
 }
 
 //Returns the latest available CO2 level
@@ -192,19 +192,20 @@ bool SCD30::setAmbientPressure(uint16_t pressure_mbar)
 // SCD30 soft reset
 void SCD30::reset()
 {
-	sendCommand(COMMAND_RESET);
-
+  sendCommand(COMMAND_RESET);
 }
 
 // Get the current ASC setting
 bool SCD30::getAutoSelfCalibration()
 {
   uint16_t response = readRegister(COMMAND_AUTOMATIC_SELF_CALIBRATION);
-  if (response == 1) {
+  if (response == 1)
+  {
     return true;
   }
-  else {
-	return false;
+  else
+  {
+    return false;
   }
 }
 
@@ -227,7 +228,7 @@ bool SCD30::beginMeasuring(void)
 // Stop continuous measurement
 bool SCD30::StopMeasurement(void)
 {
-  return(sendCommand(COMMAND_STOP_MEAS));
+  return (sendCommand(COMMAND_STOP_MEAS));
 }
 
 //Sets interval between measurements
@@ -235,6 +236,15 @@ bool SCD30::StopMeasurement(void)
 bool SCD30::setMeasurementInterval(uint16_t interval)
 {
   return sendCommand(COMMAND_SET_MEASUREMENT_INTERVAL, interval);
+}
+
+//Gets interval between measurements
+//2 seconds to 1800 seconds (30 minutes)
+uint16_t SCD30::getMeasurementInterval(void)
+{
+  uint16_t interval = 0;
+  getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, &interval);
+  return (interval);
 }
 
 //Returns true when data is available
@@ -256,9 +266,12 @@ bool SCD30::readMeasurement()
   if (dataAvailable() == false)
     return (false);
 
-  ByteToFl tempCO2; tempCO2.value = 0;
-  ByteToFl tempHumidity; tempHumidity.value = 0;
-  ByteToFl tempTemperature; tempTemperature.value = 0;
+  ByteToFl tempCO2;
+  tempCO2.value = 0;
+  ByteToFl tempHumidity;
+  tempHumidity.value = 0;
+  ByteToFl tempTemperature;
+  tempTemperature.value = 0;
 
   _i2cPort->beginTransmission(SCD30_ADDRESS);
   _i2cPort->write(COMMAND_READ_MEASUREMENT >> 8);   //MSB
@@ -283,21 +296,21 @@ bool SCD30::readMeasurement()
       case 1:
       case 3:
       case 4:
-        tempCO2.array[x < 3 ? 3-x : 4-x] = incoming;
+        tempCO2.array[x < 3 ? 3 - x : 4 - x] = incoming;
         bytesToCrc[x % 3] = incoming;
         break;
       case 6:
       case 7:
       case 9:
       case 10:
-        tempTemperature.array[x < 9 ? 9-x : 10-x] = incoming;
+        tempTemperature.array[x < 9 ? 9 - x : 10 - x] = incoming;
         bytesToCrc[x % 3] = incoming;
         break;
       case 12:
       case 13:
       case 15:
       case 16:
-        tempHumidity.array[x < 15 ? 15-x : 16-x] = incoming;
+        tempHumidity.array[x < 15 ? 15 - x : 16 - x] = incoming;
         bytesToCrc[x % 3] = incoming;
         break;
       default:

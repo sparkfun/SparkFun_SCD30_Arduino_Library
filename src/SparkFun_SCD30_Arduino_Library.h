@@ -81,27 +81,31 @@ public:
 	bool beginMeasuring(void);
 	bool StopMeasurement(void); // paulvha
 
-	// based on paulvha
-	bool getSettingValue(uint16_t registerAddress, uint16_t *val);
-	bool getForcedRecalibration(uint16_t *val) { return (getSettingValue(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, val)); }
-	bool getMeasurementInterval(uint16_t *val) { return (getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, val)); }
-	bool getTemperatureOffset(uint16_t *val) { return (getSettingValue(COMMAND_SET_TEMPERATURE_OFFSET, val)); }
-	bool getAltitudeCompensation(uint16_t *val) { return (getSettingValue(COMMAND_SET_ALTITUDE_COMPENSATION, val)); }
-	bool getFirmwareVersion(uint16_t *val) { return (getSettingValue(COMMAND_READ_FW_VER, val)); }
+	bool setAmbientPressure(uint16_t pressure_mbar);
 
+	bool getSettingValue(uint16_t registerAddress, uint16_t *val);
+	bool getFirmwareVersion(uint16_t *val) { return (getSettingValue(COMMAND_READ_FW_VER, val)); }
 	uint16_t getCO2(void);
 	float getHumidity(void);
 	float getTemperature(void);
-	float getTemperatureOffset(void);
-	uint16_t getAltitudeCompensation(void);
 
+	uint16_t getMeasurementInterval(void);
+	bool getMeasurementInterval(uint16_t *val) { return (getSettingValue(COMMAND_SET_MEASUREMENT_INTERVAL, val)); }
 	bool setMeasurementInterval(uint16_t interval);
-	bool setAmbientPressure(uint16_t pressure_mbar);
+
+	uint16_t getAltitudeCompensation(void);
+	bool getAltitudeCompensation(uint16_t *val) { return (getSettingValue(COMMAND_SET_ALTITUDE_COMPENSATION, val)); }
 	bool setAltitudeCompensation(uint16_t altitude);
-	bool setAutoSelfCalibration(bool enable);
-	bool setForcedRecalibrationFactor(uint16_t concentration);
-	bool setTemperatureOffset(float tempOffset);
+
 	bool getAutoSelfCalibration(void);
+	bool setAutoSelfCalibration(bool enable);
+
+	bool getForcedRecalibration(uint16_t *val) { return (getSettingValue(COMMAND_SET_FORCED_RECALIBRATION_FACTOR, val)); }
+	bool setForcedRecalibrationFactor(uint16_t concentration);
+
+	float getTemperatureOffset(void);
+	bool getTemperatureOffset(uint16_t *val) { return (getSettingValue(COMMAND_SET_TEMPERATURE_OFFSET, val)); }
+	bool setTemperatureOffset(float tempOffset);
 
 	bool dataAvailable();
 	bool readMeasurement();
