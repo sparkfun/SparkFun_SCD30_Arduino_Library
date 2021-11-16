@@ -64,7 +64,7 @@ void setup()
 
     if (airSensor.getTemperatureOffset(&settingVal) == true) // Get the setting
     {
-      Serial.print("Temperature offfset (C) is ");
+      Serial.print("Temperature offset (C) is ");
       Serial.println(((float)settingVal) / 100.0, 2);
     }
     else
