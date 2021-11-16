@@ -151,7 +151,15 @@ bool SCD30::setForcedRecalibrationFactor(uint16_t concentration)
 float SCD30::getTemperatureOffset(void)
 {
   uint16_t response = readRegister(COMMAND_SET_TEMPERATURE_OFFSET);
-  return (((float)response) / 100.0);
+
+  union
+  {
+    int16_t signed16;
+    uint16_t unsigned16;
+  } signedUnsigned; // Avoid any ambiguity casting int16_t to uint16_t
+  signedUnsigned.signed16 = response;
+
+  return (((float)signedUnsigned.signed16) / 100.0);
 }
 
 //Set the temperature offset. See 1.3.8.
@@ -163,6 +171,7 @@ bool SCD30::setTemperatureOffset(float tempOffset)
     uint16_t unsigned16;
   } signedUnsigned; // Avoid any ambiguity casting int16_t to uint16_t
   signedUnsigned.signed16 = tempOffset * 100;
+
   return sendCommand(COMMAND_SET_TEMPERATURE_OFFSET, signedUnsigned.unsigned16);
 }
 
