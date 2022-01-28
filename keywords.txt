@@ -14,6 +14,7 @@ SCD30	KEYWORD1
 
 SCD30	KEYWORD2
 begin	KEYWORD2
+isConnected	KEYWORD2
 enableDebugging	KEYWORD2
 beginMeasuring	KEYWORD2
 StopMeasurement	KEYWORD2

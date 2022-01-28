@@ -58,15 +58,8 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
   _i2cPort->setClockStretchLimit(200000);
 #endif
 
-  uint16_t fwVer;
-  if (getFirmwareVersion(&fwVer) == false) // Read the firmware version. Return false if the CRC check fails.
+  if (isConnected() == false)
     return (false);
-
-  if (_printDebug == true)
-  {
-    _debugPort->print(F("SCD30 begin: got firmware version 0x"));
-    _debugPort->println(fwVer, HEX);
-  }
 
   if (measBegin == false) // Exit now if measBegin is false
     return (true);
@@ -83,6 +76,22 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
   return (false); // Something went wrong
 }
 
+// Returns true if device responds to a firmware request
+bool SCD30::isConnected()
+{
+  uint16_t fwVer;
+  if (getFirmwareVersion(&fwVer) == false) // Read the firmware version. Return false if the CRC check fails.
+    return (false);
+
+  if (_printDebug == true)
+  {
+    _debugPort->print(F("Firmware version 0x"));
+    _debugPort->println(fwVer, HEX);
+  }
+
+  return (true);
+}
+
 // Calling this function with nothing sets the debug port to Serial
 // You can also call it with other streams like Serial1, SerialUSB, etc.
 void SCD30::enableDebugging(Stream &debugPort)
@@ -96,7 +105,11 @@ void SCD30::enableDebugging(Stream &debugPort)
 uint16_t SCD30::getCO2(void)
 {
   if (co2HasBeenReported == true) // Trigger a new read
-    readMeasurement();            // Pull in new co2, humidity, and temp into global vars
+  {
+    if (readMeasurement() == false) // Pull in new co2, humidity, and temp into global vars
+      co2 = 0;                      // Failed to read sensor
+  }
+
   co2HasBeenReported = true;
 
   return (uint16_t)co2; // Cut off decimal as co2 is 0 to 10,000
@@ -107,7 +120,8 @@ uint16_t SCD30::getCO2(void)
 float SCD30::getHumidity(void)
 {
   if (humidityHasBeenReported == true) // Trigger a new read
-    readMeasurement();                 // Pull in new co2, humidity, and temp into global vars
+    if (readMeasurement() == false)    // Pull in new co2, humidity, and temp into global vars
+      humidity = 0;                    // Failed to read sensor
 
   humidityHasBeenReported = true;
 
@@ -119,7 +133,8 @@ float SCD30::getHumidity(void)
 float SCD30::getTemperature(void)
 {
   if (temperatureHasBeenReported == true) // Trigger a new read
-    readMeasurement();                    // Pull in new co2, humidity, and temp into global vars
+    if (readMeasurement() == false)       // Pull in new co2, humidity, and temp into global vars
+      temperature = 0;                    // Failed to read sensor
 
   temperatureHasBeenReported = true;
 
