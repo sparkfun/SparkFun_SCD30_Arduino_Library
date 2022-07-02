@@ -310,10 +310,10 @@ bool SCD30::readMeasurement()
   bool error = false;
   if (_i2cPort->available())
   {
-    byte bytesToCrc[2];
-    for (byte x = 0; x < 18; x++)
+    uint8_t bytesToCrc[2];
+    for (uint8_t x = 0; x < 18; x++)
     {
-      byte incoming = _i2cPort->read();
+      uint8_t incoming = _i2cPort->read();
 
       switch (x)
       {
