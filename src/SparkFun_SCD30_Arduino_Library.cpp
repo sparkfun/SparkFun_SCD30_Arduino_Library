@@ -171,7 +171,7 @@ float SCD30::getTemperatureOffset(void)
     int16_t signed16;
     uint16_t unsigned16;
   } signedUnsigned; // Avoid any ambiguity casting int16_t to uint16_t
-  signedUnsigned.signed16 = response;
+  signedUnsigned.unsigned16 = response;
 
   return (((float)signedUnsigned.signed16) / 100.0);
 }
