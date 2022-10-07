@@ -120,6 +120,8 @@ public:
 
 	uint8_t computeCRC8(uint8_t data[], uint8_t len);
 
+	void useStaleData(bool enable) { _useStaleData = enable; }
+
 private:
 	// Variables
 #ifdef USE_TEENSY3_I2C_LIB
@@ -131,6 +133,7 @@ private:
 	float co2 = 0;
 	float temperature = 0;
 	float humidity = 0;
+	bool _useStaleData = false; // If true, stale data is returned instead of zeros
 
 	// These track the staleness of the current data
 	// This allows us to avoid calling readMeasurement() every time individual datums are requested

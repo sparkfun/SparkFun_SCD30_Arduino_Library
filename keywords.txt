@@ -49,6 +49,8 @@ sendCommand	KEYWORD2
 readRegister	KEYWORD2
 computeCRC8	KEYWORD2
 
+useStaleData	KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################
