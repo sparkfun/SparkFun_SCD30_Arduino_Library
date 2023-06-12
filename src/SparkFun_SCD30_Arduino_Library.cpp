@@ -41,6 +41,9 @@ bool SCD30::begin(TwoWire &wirePort, bool autoCalibrate, bool measBegin)
 {
   _i2cPort = &wirePort; // Grab which port the user wants us to use
 
+  #ifndef USE_TEENSY3_I2C_LIB
+  _i2cPort->begin();
+  #endif
   /* Especially during obtaining the ACK BIT after a byte sent the SCD30 is using clock stretching  (but NOT only there)!
    * The need for clock stretching is described in the Sensirion_CO2_Sensors_SCD30_Interface_Description.pdf
    *
